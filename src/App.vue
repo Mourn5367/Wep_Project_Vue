@@ -55,52 +55,47 @@
 </template>
 
 <script>
-  import axios from "axios";
-  export default 
+import axios from "axios";
+export default {
+  name: 'App',
+
+
+  data()
   {
-    data: () => 
-    ({
-      headers: [
-            {
-              title: '아이콘',
-              align: 'center',
-              key: 'icon',
-            },          
-            {
-              title: '아이템 이름',
-              align: 'center',
-              key: 'itemname',
-            }
-          ],
-          inputdata : "",
-    }),
+    return{
+      inputdata : "",
+      itemDatas : [],
+      itemNames :[],
+      // menudata : ["Home","Search","Login/Logout"],
+      // AlCnt : [0,0,0],
+      delstate : false,
+    }
+  },
+  components: {
+  },
+  methods: {
+  search()
+  {
+      
+      var url = `/api/df/items?itemName=${this.inputdata}}&wordType=full&limit=100&apikey=yOvnV8S9LBzTVGvmEqSs4LnFIo9IluHT`;
+      axios
+      .get(url)
+      .then((response) => {
+        console.log(response.data)
+        this.itemDatas = response.data["rows"]
+        this.itemNames = this.itemDatas.map( item => item.itemName)
 
-    methods: 
-    {
-      onClick ()
-      {
-        this.loading = true
-
-        setTimeout(() => {
-          this.loading = false
-          this.loaded = true
-        }, 2000)
-      },
-    
-    search()
-        {
-            var url = `/api/df/items?itemName=${this.inputdata}}&wordType=full&limit=100&apikey=yOvnV8S9LBzTVGvmEqSs4LnFIo9IluHT`;
-            axios
-            .get(url)
-            .then((response) => {
-              console.log(response.data)
-              this.itemDatas = response.data["rows"]
-              this.itemNames = this.itemDatas.map( item => item.itemName)
-            })
-            .catch((error) =>
-            {
-              console.log(error)
-            })
-        }
-  }}
+      })
+      .catch((error) =>{
+        console.log(error)
+      })
+      
+      
+      
+  },  asd()
+  {
+      console.log("asdsad");
+  }
+  },
+}
 </script>
